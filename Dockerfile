@@ -1,10 +1,10 @@
-FROM maven:3.8.6-jdk-8 as builder
+FROM adoptopenjdk/maven-openjdk11:latest as builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DfinalName=musicbot
 
-FROM openjdk:8-jre
+FROM openjdk:11
 WORKDIR /app
 COPY --from=builder /app/target/musicbot.jar /app
 COPY ./config.conf /app
